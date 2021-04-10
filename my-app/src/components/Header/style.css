@@ -1,6 +1,5 @@
 .Header {
-  background-color: black;
-  color: white;
+  background-color: #ffffff;
   padding: 20px;
   text-align: center;
 }
@@ -8,4 +7,3 @@
 .Header ul li {
   list-style: none;
 }
-/*# sourceMappingURL=style.css.map */
