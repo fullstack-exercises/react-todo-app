@@ -1,9 +1,34 @@
 import React from "react";
 import "./App.css";
-import ToDoItem from "./components/ToDoItem/ToDoItem";
+import TodoItem from "./components/ToDoItem/ToDoItem";
 import todosData from "./todosData";
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      todos: todosData,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(id) {
+    this.setState((prevState) => {
+      const updatedTodos = prevState.todos.map((todo) => {
+        if (todo.id === id) {
+          todo.completed = !todo.completed;
+
+          console.log("changed " + id);
+          console.log(todo.completed);
+        }
+        return todo;
+      });
+      return {
+        todos: updatedTodos,
+      };
+    });
+  }
+
   render() {
     const date = new Date();
     const hours = date.getHours();
@@ -12,8 +37,8 @@ class App extends React.Component {
       color: "grey",
     };
 
-    const todoItems = todosData.map((item) => (
-      <ToDoItem key="{item.id}" item={item} />
+    const todoItems = this.state.todos.map((item) => (
+      <TodoItem key={item.id} item={item} handleChange={this.handleChange} />
     ));
 
     if (hours < 12) {
@@ -29,7 +54,7 @@ class App extends React.Component {
         <header className="Header">
           <h1 style={styles}>Good {timeOfDay}!</h1>
         </header>
-        <main>{todoItems}</main>
+        <div className="todo-list">{todoItems}</div>
       </div>
     );
   }
